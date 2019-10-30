@@ -74,3 +74,10 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
                         dtype={col: dtypes[col] for col in col_names[s3_key.split('.')[-1]]})
               .pipe(parse_dates)
             )
+
+
+def load_merged_data(s3_bucket: str) -> DataFrame:
+    df_data = load_data(s3_bucket, "u.data")
+    df_item = load_data(s3_bucket, "u.item")
+    df_user = load_data(s3_bucket, "u.user")
+    return pd.merge(pd.merge(df_data, df_item, on="movie_id"), df_user, on="user_id")
