@@ -55,7 +55,7 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
         "western": bool,
         "age": int,
         "gender": pd.CategoricalDtype(categories=["M", "F"], ordered=False),
-        "zip_code": int,
+        "zip_code": str,
         "occupation": pd.CategoricalDtype(categories=occupations, ordered=False),
     }
 
