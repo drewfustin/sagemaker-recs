@@ -10,6 +10,8 @@ There is a set of `user_id`, `movie_id`, and `rating` (from 1-5) that is availab
 wget http://files.grouplens.org/datasets/movielens/ml-100k.zip
 ```
 
+This data has been unzipped and posted on the `movielens-recs` S3 bucket.
+
 ## Modeling Strategy
 
 This is our modeling strategy.
