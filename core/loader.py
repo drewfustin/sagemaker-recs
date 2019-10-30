@@ -68,7 +68,7 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
 
     return (pd.read_csv(f"s3://{s3_bucket}/{s3_key}",
                         encoding="ISO-8859-1",
-                        sep="\t",
+                        sep="|" if s3_key.split('.')[-1] in ('item', 'user') else "\t",
                         header=None,
                         names=col_names[s3_key.split('.')[-1]],
                         dtype={col: dtypes[col] for col in col_names[s3_key.split('.')[-1]]})
