@@ -25,7 +25,6 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
                    "entertainment", "executive", "healthcare", "homemaker", "lawyer",
                    "librarian", "marketing", "none", "other", "programmer", "retired",
                    "salesman", "scientist", "student", "technician", "writer"]
-    date_dtypes = set(["timestamp", "release_date", "video_release_date"])
     dtypes = {
         "user_id": int,
         "movie_id": int,
@@ -59,6 +58,7 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
         "zip_code": int,
         "occupation": pd.CategoricalDtype(categories=occupations, ordered=False),
     }
+
     def parse_dates(df: DataFrame) -> DataFrame:
         if 'timestamp' in df.columns:
             df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
@@ -67,9 +67,10 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
         return df
 
     return (pd.read_csv(f"s3://{s3_bucket}/{s3_key}",
+                        encoding="ISO-8859-1",
                         sep="\t",
                         header=None,
                         names=col_names[s3_key.split('.')[-1]],
                         dtype={col: dtypes[col] for col in col_names[s3_key.split('.')[-1]]})
               .pipe(parse_dates)
-           )
+            )
