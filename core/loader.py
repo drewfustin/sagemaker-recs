@@ -7,7 +7,7 @@ def load_data(s3_bucket: str, s3_key: str) -> DataFrame:
     allowed_keys = (
         ["u.data", "u.item", "u.user"] +
         list(np.array([(f"u{i}.base", f"u{i}.test")
-                       for i in list(range(1, 6)) + ['a', 'b']]).flatten()))
+                       for i in [str(n) for n in range(1, 6)] + ["a", "b"]]).flatten()))
     assert s3_key in allowed_keys, \
         f"Don't look at that data. Only look at one of these: {allowed_keys}"
     col_names = {
